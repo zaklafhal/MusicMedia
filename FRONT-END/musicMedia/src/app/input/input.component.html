@@ -1,1 +1,10 @@
-<p>input works!</p>
+<div>
+  <input
+    [type]="type"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+    [disabled]="disabled"
+    [value]="value"
+    [placeholder]="placeholder"
+  />
+</div>

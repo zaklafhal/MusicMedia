@@ -19,9 +19,8 @@ import {
 export class InputComponent implements OnInit, ControlValueAccessor, Validator {
   @Input() placeholder: string;
   @Input() type: string;
-  @Input() error: string;
+  @Input() error: string = this.setError();
   @Input() isRequired: boolean;
-
   value: string;
   onChange: (event) => void;
   onTouched: () => void;
@@ -30,15 +29,17 @@ export class InputComponent implements OnInit, ControlValueAccessor, Validator {
   constructor(@Self() public controlDir: NgControl) {
     this.controlDir.valueAccessor = this;
   }
+  setError(): string {
+    const errorMsg = 'This field is required !';
+      return errorMsg;
+    
+  }
   validate(control: AbstractControl): ValidationErrors {
     const validators: ValidatorFn[] = [];
     if (this.isRequired) {
-      validators.push(Validators.required); 
+      validators.push(Validators.required);
     }
     return validators;
-  }
-  registerOnValidatorChange?(fn: () => void): void {
-    throw new Error('Method not implemented.');
   }
   writeValue(obj: any): void {
     this.value = obj ? obj : '';

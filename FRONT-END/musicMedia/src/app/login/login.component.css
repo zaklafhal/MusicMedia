@@ -1,0 +1,15 @@
+.center {
+    margin: auto;
+    width: 60%;
+    padding: 18%;
+  }
+.input{
+    width: 200%;
+    padding: 10px;
+}
+.signInBtn{
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+}
+  

@@ -1,4 +1,21 @@
 <form (ngSubmit)="signIn(form)" [formGroup]="form">
-  <app-input formControlName="email" [type]="'email'" [placeholder]="'Email'"></app-input>
-  <button class="btn btn-primary" type="submit">Sign In</button>
+  <div class="col center">
+    <div class="row">
+      <app-input
+        class="input"
+        formControlName="email"
+        [type]="'email'"
+        [placeholder]="'Email'"
+      ></app-input>
+    </div>
+    <div class="row">
+      <app-input
+        class="input"
+        formControlName="password"
+        [type]="'password'"
+        [placeholder]="'Password'"
+      ></app-input>
+    </div>
+    <button class="btn btn-primary signInBtn"  type="submit">Sign In</button>
+  </div>
 </form>

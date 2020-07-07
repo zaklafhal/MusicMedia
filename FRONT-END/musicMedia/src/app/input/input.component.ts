@@ -33,7 +33,7 @@ export class InputComponent implements OnInit, ControlValueAccessor, Validator {
   validate(control: AbstractControl): ValidationErrors {
     const validators: ValidatorFn[] = [];
     if (this.isRequired) {
-      validators.push(Validators.required);
+      validators.push(Validators.required); 
     }
     return validators;
   }

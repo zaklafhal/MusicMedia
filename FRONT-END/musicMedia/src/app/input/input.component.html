@@ -8,11 +8,12 @@
     [value]="value"
     [placeholder]="placeholder"
   />
-  <span
-    class="error"
+  <div
+    class="alert alert-danger"
     *ngIf="
       controlDir && !controlDir.control.valid && controlDir.control.touched
     "
-    >{{ error }}</span
   >
+    {{ error }}
+  </div>
 </div>

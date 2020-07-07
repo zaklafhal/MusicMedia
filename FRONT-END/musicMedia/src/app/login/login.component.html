@@ -17,9 +17,9 @@
         [type]="'password'"
         [placeholder]="'Password'"
         [isRequired]="true"
-        [error]="'This field is required'"
+        [error]="'This field is required'"  
       ></app-input>
     </div>
-    <button class="btn btn-primary signInBtn" type="submit">Sign In</button>
+    <button class="btn btn-primary signInBtn" type="submit" [disabled]="!form.valid">Sign In</button>
   </div>
 </form>

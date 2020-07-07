@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     password: 'Passw0rd!',
   };
   public form = this.formBuilder.group({
-    email: ['', Validators.required],
+    email: ['',[Validators.email, Validators.required] ],
     password: ['', Validators.required],
   });
   constructor(private formBuilder: FormBuilder) {}

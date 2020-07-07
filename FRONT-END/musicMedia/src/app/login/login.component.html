@@ -6,6 +6,8 @@
         formControlName="email"
         [type]="'email'"
         [placeholder]="'Email'"
+        [isRequired]="true"
+        [error]="'This field is required'"
       ></app-input>
     </div>
     <div class="row">
@@ -14,8 +16,10 @@
         formControlName="password"
         [type]="'password'"
         [placeholder]="'Password'"
+        [isRequired]="true"
+        [error]="'This field is required'"
       ></app-input>
     </div>
-    <button class="btn btn-primary signInBtn"  type="submit">Sign In</button>
+    <button class="btn btn-primary signInBtn" type="submit">Sign In</button>
   </div>
 </form>

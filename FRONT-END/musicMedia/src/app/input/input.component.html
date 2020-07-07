@@ -1,11 +1,18 @@
 <div class="form-group">
-    <input
-      class="form-control"
-      [type]="type"
-      (input)="onChange($event.target.value)"
-      (blur)="onTouched()"
-      [disabled]="disabled"
-      [value]="value"
-      [placeholder]="placeholder"
-    />
+  <input
+    class="form-control"
+    [type]="type"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+    [disabled]="disabled"
+    [value]="value"
+    [placeholder]="placeholder"
+  />
+  <span
+    class="error"
+    *ngIf="
+      controlDir && !controlDir.control.valid && controlDir.control.touched
+    "
+    >{{ error }}</span
+  >
 </div>

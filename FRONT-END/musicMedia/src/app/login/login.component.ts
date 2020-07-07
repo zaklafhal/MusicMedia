@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   });
   constructor(private formBuilder: FormBuilder) {}
   signIn(form): void {
-    console.log(form.controls.email.value);
+    console.log(form);
   }
   ngOnInit(): void {}
 }

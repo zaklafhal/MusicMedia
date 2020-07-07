@@ -1,0 +1,10 @@
+.fontAwesome {
+  position: relative;
+}
+.fontAwesome i {
+  position: absolute;
+  left: 300px;
+  top: 35px;
+  width: 100px;
+  color: gray;
+}

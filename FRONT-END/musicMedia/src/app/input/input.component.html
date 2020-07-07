@@ -1,13 +1,17 @@
 <div class="form-group">
-  <input
-    class="form-control"
-    [type]="type"
-    (input)="onChange($event.target.value)"
-    (blur)="onTouched()"
-    [disabled]="disabled"
-    [value]="value"
-    [placeholder]="placeholder"
-  />
+  <div class="fontAwesome">
+    <label><b></b></label>
+    <input
+      class="form-control"
+      [type]="type"
+      (input)="onChange($event.target.value)"
+      (blur)="onTouched()"
+      [disabled]="disabled"
+      [value]="value"
+      [placeholder]="placeholder"
+    />
+    <i [class]="icon"></i>
+  </div>
   <div
     class="alert alert-danger"
     *ngIf="

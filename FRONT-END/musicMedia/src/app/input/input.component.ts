@@ -21,6 +21,7 @@ export class InputComponent implements OnInit, ControlValueAccessor, Validator {
   @Input() type: string;
   @Input() error: string = this.setError();
   @Input() isRequired: boolean;
+  @Input() icon : string;
   value: string;
   onChange: (event) => void;
   onTouched: () => void;

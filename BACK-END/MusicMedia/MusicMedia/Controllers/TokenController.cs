@@ -45,7 +45,9 @@ namespace MusicMedia.Controllers
         private async Task<dynamic> GenerateToken(string email)
         {
             var user = await _userManager.FindByNameAsync(email);
+            var userInfos = new UserInfo(user);
             var claims = new List<Claim> { 
+                new Claim("user" , userInfos.ToString()),
                 new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),

@@ -15,7 +15,8 @@ export class StorageService {
   }
   getUserInfos(): any {
     try {
-      return jwt_decode(this.getToken());
+      const {user} = jwt_decode(this.getToken())
+      return user;
     } catch (Error) {
       return null;
     }

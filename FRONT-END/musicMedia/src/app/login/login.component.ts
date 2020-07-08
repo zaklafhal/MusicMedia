@@ -30,10 +30,11 @@ export class LoginComponent implements OnInit {
     this.form.controls.email.value === ''
       ? this.errorRequired
       : 'Invalid email address';
-  signIn(form): void {
-    this.userService
-      .login(this.loginRequest)
-      .subscribe((res) => this.storageService.storeToken(res));
+  login(form): void {
+    this.userService.login(this.loginRequest).subscribe((res) => {
+      this.storageService.storeToken(res);
+      console.log(this.storageService.getUserInfos());
+    });
     this.router.navigate(['main']);
   }
   ngOnInit(): void {}

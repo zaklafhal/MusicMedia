@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using MusicMedia.Data;
+using MusicMedia.Models;
+using MusicMedia.Models.Dto;
 
 namespace MusicMedia.Controllers
 {
@@ -11,6 +15,14 @@ namespace MusicMedia.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
+
+        public UserController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        {
+            _userManager = userManager;
+            _context = context;
+        }
         // GET: api/User
         [HttpGet]
         public IEnumerable<string> Get()
@@ -26,9 +38,22 @@ namespace MusicMedia.Controllers
         }
 
         // POST: api/User
+        //Register an user
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] RegisterRequest registerRequest)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = new ApplicationUser(registerRequest);
+            var result = await _userManager.CreateAsync(user, registerRequest.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result);
+            }
+            return Ok();
+
         }
 
         // PUT: api/User/5

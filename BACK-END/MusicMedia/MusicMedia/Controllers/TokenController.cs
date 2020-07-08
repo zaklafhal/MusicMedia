@@ -46,7 +46,7 @@ namespace MusicMedia.Controllers
         {
             var user = await _userManager.FindByNameAsync(email);
             var claims = new List<Claim> { 
-                //new Claim(ClaimTypes.Name, phone),
+                new Claim(ClaimTypes.Email, email),
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
                  new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString())
@@ -62,7 +62,7 @@ namespace MusicMedia.Controllers
         }
         private async Task<bool> IsValidUser(LoginRequest loginRequest)
         {
-            var user = await _userManager.FindByNameAsync(loginRequest.Email);
+            var user = await _userManager.FindByEmailAsync(loginRequest.Email);
             return await _userManager.CheckPasswordAsync(user, loginRequest.Password);
         }
     }

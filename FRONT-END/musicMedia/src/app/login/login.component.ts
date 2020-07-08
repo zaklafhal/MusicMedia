@@ -3,6 +3,7 @@ import { LoginRequest } from '../dto/loginRequest';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from './../user.service';
+import { StorageService } from './../storage.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private storageService: StorageService
   ) {}
   errorRequired: string = 'This field is required';
   errorEmail: string =
@@ -31,7 +33,7 @@ export class LoginComponent implements OnInit {
   signIn(form): void {
     this.userService
       .login(this.loginRequest)
-      .subscribe((res) => console.log(res));
+      .subscribe((res) => this.storageService.storeToken(res));
     this.router.navigate(['main']);
   }
   ngOnInit(): void {}

@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace MusicMedia
+namespace MusicMedia.Models
 {
     public class WeatherForecast
     {

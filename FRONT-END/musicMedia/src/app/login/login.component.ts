@@ -11,10 +11,6 @@ import { StorageService } from './../storage.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  loginRequest: LoginRequest = {
-    email: 'test@test.ca',
-    password: 'Passw0rd!',
-  };
   public form = this.formBuilder.group({
     email: ['', [Validators.email, Validators.required]],
     password: ['', Validators.required],
@@ -30,12 +26,21 @@ export class LoginComponent implements OnInit {
     this.form.controls.email.value === ''
       ? this.errorRequired
       : 'Invalid email address';
+
   login(form): void {
-    this.userService.login(this.loginRequest).subscribe((res) => {
+    const loginRequest = this.getLoginRequest(form);
+    this.userService.login(loginRequest).subscribe((res) => {
       this.storageService.storeToken(res);
       console.log(this.storageService.getUserInfos());
+      this.router.navigate(['main']);
     });
-    this.router.navigate(['main']);
+  }
+  getLoginRequest(form: FormGroup): LoginRequest {
+    const loginRequest = {
+      email: form.controls.email.value,
+      password: form.controls.password.value,
+    };
+    return loginRequest;
   }
   ngOnInit(): void {}
 }

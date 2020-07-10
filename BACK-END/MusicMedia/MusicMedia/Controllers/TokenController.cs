@@ -37,7 +37,7 @@ namespace MusicMedia.Controllers
             }
             else
             {
-                return BadRequest();
+                return BadRequest("Invalid Email or Password");
             }
 
         }

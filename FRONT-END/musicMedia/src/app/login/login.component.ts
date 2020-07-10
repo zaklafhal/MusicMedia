@@ -26,14 +26,17 @@ export class LoginComponent implements OnInit {
     this.form.controls.email.value === ''
       ? this.errorRequired
       : 'Invalid email address';
-
-  login(form): void {
+  error: string;
+  login(form: FormGroup): void {
     const loginRequest = this.getLoginRequest(form);
-    this.userService.login(loginRequest).subscribe((res) => {
-      this.storageService.storeToken(res);
-      console.log(this.storageService.user);
-      this.router.navigate(['main']);
-    });
+    this.userService.login(loginRequest).subscribe(
+      (res) => {
+        this.storageService.storeToken(res);
+        console.log(this.storageService.user);
+        this.router.navigate(['main']);
+      },
+      (e) => (this.error = e.error)
+    );
   }
   getLoginRequest(form: FormGroup): LoginRequest {
     const loginRequest = {

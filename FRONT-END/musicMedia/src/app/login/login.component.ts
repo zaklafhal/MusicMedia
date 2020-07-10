@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
     const loginRequest = this.getLoginRequest(form);
     this.userService.login(loginRequest).subscribe((res) => {
       this.storageService.storeToken(res);
-      console.log(this.storageService.getUserInfos());
+      console.log(this.storageService.user);
       this.router.navigate(['main']);
     });
   }

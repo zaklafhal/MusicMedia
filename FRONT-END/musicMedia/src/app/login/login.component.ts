@@ -32,7 +32,6 @@ export class LoginComponent implements OnInit {
     this.userService.login(loginRequest).subscribe(
       (res) => {
         this.storageService.storeToken(res);
-        console.log(this.storageService.user);
         this.router.navigate(['main']);
       },
       (e) => (this.error = e.error)

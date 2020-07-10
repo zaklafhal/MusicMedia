@@ -25,13 +25,15 @@
         <a class="nav-link" href="#">Pricing</a>
       </li>
     </ul>
-    <span class="navbar-text">
-      <a class="btn" routerLink="/login">Login</a>
-      <a class="btn" routerLink="/login">Register</a>
+    <span class="navbar-text" *ngIf="user; else userNotLogged">
+      <a class="btn" routerLink="/main" (click)="logout()">Logout</a>
     </span>
-    <span class="navbar-text">
-        <a class="btn" (click)="logout()">Logout</a>
-    </span>
+    <ng-template #userNotLogged>
+      <span class="navbar-text">
+        <a class="btn" routerLink="/login">Login</a>
+        <a class="btn" routerLink="/login">Register</a>
+      </span>
+    </ng-template>
   </div>
 </nav>
 <router-outlet></router-outlet>

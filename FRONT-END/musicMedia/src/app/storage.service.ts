@@ -23,4 +23,7 @@ export class StorageService {
       return null;
     }
   }
+  logout(): void {
+    localStorage.removeItem(this.key);
+  }
 }

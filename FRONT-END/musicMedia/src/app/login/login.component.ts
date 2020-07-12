@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     this.userService.login(loginRequest).subscribe(
       (res) => {
         this.storageService.storeToken(res);
-        this.router.navigate(['main']);
+        location.assign('/main');
       },
       (e) => (this.error = e.error)
     );

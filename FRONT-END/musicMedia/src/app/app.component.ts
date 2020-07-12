@@ -14,5 +14,6 @@ export class AppComponent {
   user: UserInfos = this.storageService.user;
   logout(): void {
     this.storageService.logout();
+    location.assign('/main');
   }
 }

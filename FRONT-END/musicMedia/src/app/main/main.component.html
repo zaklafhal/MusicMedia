@@ -1,1 +1,20 @@
-<p>main works!</p>
+<form (ngSubmit)="search(form)" [formGroup]="form">
+  <div class="col center">
+    <div class="row">
+      <app-input
+        class="input"
+        formControlName="artisteName"
+        [type]="'text'"
+        [placeholder]="'Artiste name'"
+        [icon]="'fas fa-search'"
+      ></app-input>
+    </div>
+      <button
+        class="btn btn-primary signInBtn"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Search
+      </button>
+  </div>
+</form>

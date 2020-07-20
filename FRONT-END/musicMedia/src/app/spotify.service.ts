@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import {
   HttpClient,
   HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
+import config from './config.json'
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
@@ -21,6 +22,7 @@ export class SpotifyService {
 
     return throwError('erro');
   }
+
 
   searchArtist(artistName: string): Observable<any> {
     const url = `https://api.spotify.com/v1/search?query=${artistName}&offset=0&limit=20&type=artist`;

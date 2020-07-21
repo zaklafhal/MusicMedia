@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { SpotifyService } from './../spotify.service';
 
 @Component({
   selector: 'app-main',
@@ -10,10 +11,19 @@ export class MainComponent implements OnInit {
   public form = this.formBuilder.group({
     artisteName: ['', []],
   });
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private spotify: SpotifyService
+  ) {}
 
   search(form: FormGroup) {
     console.log(form);
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getToken();
+  }
+  getToken(): void {
+    // get the spotify token
+    this.spotify.getToken();
+  }
 }

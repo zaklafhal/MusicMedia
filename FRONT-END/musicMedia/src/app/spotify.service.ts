@@ -13,6 +13,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class SpotifyService {
   constructor(private http: HttpClient) {}
+  public token;
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // client or network error
@@ -22,26 +23,25 @@ export class SpotifyService {
 
     return throwError('erro');
   }
-  getAuth(): Observable<any> {
-    const headers = new HttpHeaders();
-    headers.append(
-      'Authorization',
-      'Basic ' + btoa(config.client_id + ':' + config.client_secret)
-    );
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-    const params: URLSearchParams = new URLSearchParams();
-    params.set('grant_type', 'client_credentials');
-    const body = params.toString();
-
+  setToken(): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization:
+        'Basic  ' + btoa(config.client_id + ':' + config.client_secret),
+      'Content-Type': 'application/x-www-form-urlencoded;',
+    });
+    const body = 'grant_type=client_credentials';
     return this.http
       .post<any>('https://accounts.spotify.com/api/token', body, {
         headers: headers,
       })
       .pipe(
         catchError(this.handleError),
-        map((res) => res.json)
+        map((res) => res['access_token'])
       );
+  }
+  getToken() {
+    this.setToken().subscribe((res) => (this.token = res));
   }
 
   searchArtist(artistName: string): Observable<any> {

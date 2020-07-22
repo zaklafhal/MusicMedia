@@ -46,4 +46,4 @@ testem.log
 Thumbs.db
 
 #config.json
-/app/config.json
+/src/app/config.json

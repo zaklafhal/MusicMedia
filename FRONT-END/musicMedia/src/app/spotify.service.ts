@@ -46,9 +46,14 @@ export class SpotifyService {
 
   searchArtist(artistName: string): Observable<any> {
     const url = `https://api.spotify.com/v1/search?query=${artistName}&offset=0&limit=20&type=artist`;
-    return this.http.get<any>(url).pipe(
-      catchError(this.handleError),
-      map((res) => res.json)
-    );
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer  ' + this.token,
+    });
+    return this.http
+      .get<any>(url, { headers: headers })
+      .pipe(
+        catchError(this.handleError),
+        map((res) => console.log(res))
+      );
   }
 }

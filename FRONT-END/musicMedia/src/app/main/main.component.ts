@@ -17,7 +17,8 @@ export class MainComponent implements OnInit {
   ) {}
 
   search(form: FormGroup) {
-    console.log(form);
+    const { value: artiste } = form.controls.artisteName;
+    this.spotify.searchArtist(artiste).subscribe((res) => console.log(res + " 2!"))
   }
   ngOnInit(): void {
     this.getToken();

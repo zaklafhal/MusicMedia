@@ -1,7 +1,7 @@
 .center {
     margin-left: 0;
     width: 30%;
-    padding: 5%;
+    padding: 1%;
   }
 .input{
     width: 200%;
@@ -12,5 +12,12 @@
     position: absolute;
     left: 50%;
     margin-left: -50px;
+}
+.artistcard{
+    padding: 5%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
   

@@ -7,6 +7,7 @@ import {
 } from '@angular/common/http';
 import config from './config.json';
 import { catchError, map } from 'rxjs/operators';
+import { Artist } from './model/artist';
 
 @Injectable({
   providedIn: 'root',
@@ -44,16 +45,16 @@ export class SpotifyService {
     this.setToken().subscribe((res) => (this.token = res));
   }
 
-  searchArtist(artistName: string): Observable<any> {
+  searchArtist(artistName: string): Observable<Artist> {
     const url = `https://api.spotify.com/v1/search?query=${artistName}&offset=0&limit=20&type=artist`;
     const headers = new HttpHeaders({
       Authorization: 'Bearer  ' + this.token,
     });
     return this.http
-      .get<any>(url, { headers: headers })
+      .get<Artist>(url, { headers: headers })
       .pipe(
         catchError(this.handleError),
-        map((res) => console.log(res))
+        map((res) => Artist.parse(res))
       );
   }
 }

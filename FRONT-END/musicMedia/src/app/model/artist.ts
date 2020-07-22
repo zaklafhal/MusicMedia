@@ -9,8 +9,8 @@ export class Artist {
     this.spotifyId = spotifyId;
   }
 
-  parse(res: any): Artist {
-    const { items } = res;
+  static parse(res: any): Artist {
+    const { items } = res.artists;
     const artistInfos = items[0];
     const artist = new Artist(
       artistInfos.name,

@@ -16,8 +16,21 @@
 .artistcard{
     padding: 5%;
     margin: auto;
+    width: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.card h5{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.actionBtn{
+    margin-left: 50px;
+}
+.detailsBtn{
+    margin-right: 50px;
 }
   

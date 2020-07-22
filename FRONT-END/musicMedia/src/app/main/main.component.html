@@ -9,21 +9,22 @@
         [icon]="'fas fa-search'"
       ></app-input>
     </div>
-      <button
-        class="btn btn-primary signInBtn"
-        type="submit"
-        [disabled]="!form.valid"
-      >
-        Search
-      </button>
+    <button
+      class="btn btn-primary signInBtn"
+      type="submit"
+      [disabled]="!form.valid"
+    >
+      Search
+    </button>
   </div>
 </form>
-  <div *ngIf="artist" class="col artistcard">
-  <div class="card" style="width: 18rem;">
-    <img [src]="artist.image" class="card-img-top">
+<div *ngIf="artist" class="col artistcard">
+  <div class="card" style="width: 20rem;">
+    <img [src]="artist.image" class="card-img-top" />
     <div class="card-body">
-      <h5 class="card-title">{{artist.name}}</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
+      <h5 class="card-title">{{ artist.name }}</h5>
+      <a href="#" class="btn btn-primary detailsBtn">Details</a>
+        <a href="#" class="btn btn-primary actionBtn">Add to list</a>
     </div>
   </div>
+</div>

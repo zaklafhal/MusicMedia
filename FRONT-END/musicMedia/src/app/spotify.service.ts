@@ -22,7 +22,7 @@ export class SpotifyService {
       // Backend error
     }
 
-    return throwError('erro');
+    return throwError('error');
   }
 
   setToken(): Observable<any> {
@@ -53,7 +53,6 @@ export class SpotifyService {
     return this.http
       .get<Artist>(url, { headers: headers })
       .pipe(
-        catchError(this.handleError),
         map((res) => Artist.parse(res))
       );
   }

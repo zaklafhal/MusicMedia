@@ -13,6 +13,7 @@ export class MainComponent implements OnInit {
     artisteName: ['', []],
   });
   public artist: Artist;
+  public error: string;
   constructor(
     private formBuilder: FormBuilder,
     private spotify: SpotifyService
@@ -20,7 +21,14 @@ export class MainComponent implements OnInit {
 
   search(form: FormGroup) {
     const { value: artiste } = form.controls.artisteName;
-    this.spotify.searchArtist(artiste).subscribe((res) => this.artist = res);
+    this.spotify.searchArtist(artiste).subscribe(
+      (res) => (this.artist = res),
+      (error) => {
+        const {error : e} = error;
+        const { message } = e.error;
+        this.error = message;
+      }
+    );
   }
   ngOnInit(): void {
     this.getToken();

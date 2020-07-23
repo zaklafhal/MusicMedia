@@ -1,30 +1,34 @@
-<form (ngSubmit)="search(form)" [formGroup]="form">
-  <div class="col center">
-    <div class="row">
-      <app-input
-        class="input"
-        formControlName="artisteName"
-        [type]="'text'"
-        [placeholder]="'Artiste name'"
-        [icon]="'fas fa-search'"
-      ></app-input>
-    </div>
-    <button
-      class="btn btn-primary signInBtn"
-      type="submit"
-      [disabled]="!form.valid"
-    >
-      Search
-    </button>
+<div class="container">
+  <div class="row">
+    <form (ngSubmit)="search(form)" [formGroup]="form">
+      <div class="col">
+        <app-input
+          class="input"
+          formControlName="artisteName"
+          [type]="'text'"
+          [placeholder]="'Artiste name'"
+          [icon]="'fas fa-search'"
+        ></app-input>
+        <button
+          class="btn btn-primary signInBtn"
+          type="submit"
+          [disabled]="!form.valid"
+        >
+          Search
+        </button>
+      </div>
+    </form>
   </div>
-</form>
-<div *ngIf="artist" class="col artistcard">
-  <div class="card" style="width: 20rem;">
-    <img [src]="artist.image" class="card-img-top" />
-    <div class="card-body">
-      <h5 class="card-title">{{ artist.name }}</h5>
-      <a href="#" class="btn btn-primary detailsBtn">Details</a>
-        <a href="#" class="btn btn-primary actionBtn">Add to list</a>
+  <div class="row">
+    <div *ngIf="artist" class="col artistcard">
+      <div class="card" style="width: 20rem;">
+        <img [src]="artist.image" class="card-img-top" />
+        <div class="card-body">
+          <h5 class="card-title">{{ artist.name }}</h5>
+          <a href="#" class="btn btn-primary detailsBtn">Details</a>
+          <a href="#" class="btn btn-primary actionBtn">Add to list</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>

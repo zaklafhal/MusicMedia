@@ -14,5 +14,6 @@ namespace MusicMedia.Data
         }
 
         public DbSet<MusicMedia.Models.ApplicationUser> ApplicationUser { get; set; }
+        public DbSet<MusicMedia.Models.Artist> Artists { get; set; }
     }
 }

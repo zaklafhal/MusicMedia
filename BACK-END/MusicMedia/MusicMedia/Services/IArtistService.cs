@@ -9,8 +9,8 @@ namespace MusicMedia.Services
 {
     public interface IArtistService
     {
-        void AddArtist(Artist artist, ApplicationUser user);
-
+        Task AddArtistAsync(Artist artist, ApplicationUser user);
+        void ValidateArtist(Artist artist, ApplicationUser user);
 
     }
 }

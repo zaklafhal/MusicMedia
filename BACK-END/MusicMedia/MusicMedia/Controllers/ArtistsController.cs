@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using MusicMedia.Data;
 using MusicMedia.Models;
+using MusicMedia.Services;
 
 namespace MusicMedia.Controllers
 {
@@ -17,19 +18,33 @@ namespace MusicMedia.Controllers
     public class ArtistsController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ApplicationDbContext _context;
-        public ArtistsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        private readonly IArtistService _artistService;
+        public ArtistsController(IArtistService artistService, UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _context = context;
+            _artistService = artistService;
         }
 
         [Authorize]
         [HttpPost]
         [Route("")]
-        public IActionResult AddArtist(Artist artist)
+        public async Task<IActionResult> AddArtistAsync(Artist artist)
         {
-            return Ok();
+            try
+            {
+                if(!ModelState.IsValid)
+                {
+                    return BadRequest();
+                }
+                var user = await _userManager.GetUserAsync(User);
+                await _artistService.AddArtistAsync(artist, user);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+            
         }
     }
 }

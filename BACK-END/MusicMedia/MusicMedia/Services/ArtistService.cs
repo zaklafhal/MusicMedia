@@ -25,7 +25,9 @@ namespace MusicMedia.Services
         public void ValidateArtist(Artist artist, ApplicationUser user)
         {
 
-            if (artist == null || user.Artists.Contains(artist))
+            if (artist == null || user == null)
+                throw new Exception();
+            if (user.Artists.Contains(artist))
                 throw new Exception();
         }
     }

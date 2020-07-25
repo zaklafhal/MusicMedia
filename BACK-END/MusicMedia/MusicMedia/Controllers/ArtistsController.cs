@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using MusicMedia.Data;
 using MusicMedia.Models;
 
@@ -20,6 +22,14 @@ namespace MusicMedia.Controllers
         {
             _userManager = userManager;
             _context = context;
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("")]
+        public IActionResult AddArtist(Artist artist)
+        {
+            return Ok();
         }
     }
 }

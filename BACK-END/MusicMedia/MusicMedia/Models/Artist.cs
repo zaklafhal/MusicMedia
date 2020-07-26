@@ -12,6 +12,7 @@ namespace MusicMedia.Models
         public string SpotifyId { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
+        public string ApplicationUserId { get; set; }
 
         public Artist()
         {

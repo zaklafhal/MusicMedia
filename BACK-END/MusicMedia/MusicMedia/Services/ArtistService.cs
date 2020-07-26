@@ -20,6 +20,7 @@ namespace MusicMedia.Services
         {
             ValidateArtist(model, user);
             var artist = new Artist(model);
+            artist.ApplicationUserId = user.Id;
             user.Artists.Add(artist);
             await _context.Artists.AddAsync(artist);
             await _context.SaveChangesAsync(); 

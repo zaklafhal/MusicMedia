@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SpotifyService } from './../spotify.service';
+import { SpotifyService } from '../services/spotify.service';
 import { Artist } from './../model/artist';
 
 @Component({

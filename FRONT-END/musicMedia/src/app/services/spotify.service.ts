@@ -5,9 +5,9 @@ import {
   HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
-import config from './config.json';
+import config from '../config.json';
 import { catchError, map } from 'rxjs/operators';
-import { Artist } from './model/artist';
+import { Artist } from '../model/artist';
 
 @Injectable({
   providedIn: 'root',

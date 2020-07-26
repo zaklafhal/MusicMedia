@@ -1,5 +1,6 @@
 ﻿using MusicMedia.Data;
 using MusicMedia.Models;
+using MusicMedia.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,19 +16,20 @@ namespace MusicMedia.Services
         {
             _context = context;
         }
-        public async Task AddArtistAsync(Artist artist, ApplicationUser user)
+        public async Task AddArtistAsync(ArtistDto model, ApplicationUser user)
         {
-            ValidateArtist(artist, user);
+            ValidateArtist(model, user);
+            var artist = new Artist(model);
             user.Artists.Add(artist);
             await _context.Artists.AddAsync(artist);
             await _context.SaveChangesAsync(); 
         }
-        public void ValidateArtist(Artist artist, ApplicationUser user)
+        public void ValidateArtist(ArtistDto model, ApplicationUser user)
         {
 
-            if (artist == null || user == null)
+            if (model == null || user == null)
                 throw new Exception();
-            if (user.Artists.Contains(artist))
+            if (user.ContainsArtist(model))
                 throw new Exception();
         }
     }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using MusicMedia.Data;
 using MusicMedia.Models;
+using MusicMedia.Models.Dto;
 using MusicMedia.Services;
 
 namespace MusicMedia.Controllers
@@ -28,7 +29,7 @@ namespace MusicMedia.Controllers
         [Authorize]
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> AddArtistAsync(Artist artist)
+        public async Task<IActionResult> AddArtistAsync(ArtistDto model)
         {
             try
             {
@@ -37,7 +38,7 @@ namespace MusicMedia.Controllers
                     return BadRequest();
                 }
                 var user = await _userManager.GetUserAsync(User);
-                await _artistService.AddArtistAsync(artist, user);
+                await _artistService.AddArtistAsync(model, user);
                 return Ok();
             }
             catch (Exception)

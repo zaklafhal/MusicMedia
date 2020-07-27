@@ -7,21 +7,21 @@ import { Artist } from '../model/artist';
 import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ArtistService {
+  constructor(private http: HttpClient, private storage: StorageService) {}
+  private endpoint = `${environment.endpoint}artists`;
 
-  constructor(private http : HttpClient, private storage: StorageService) { }
-  private endpoint = `${environment.endpoint} + artists` 
-
-  addArtist(artist: Artist): void{
-    if(this.storage.user){
+  addArtist(artist: Artist): Observable<any> {
+    console.log(this.storage.user);
+    if (this.storage.user) {
+      console.log(this.storage.getToken());
       const headers = new HttpHeaders({
-        Authorization:
-          'Bearer  ' + this.storage.getToken(),
-        'Content-Type': 'application/x-www-form-urlencoded;',
+        Authorization: 'Bearer  ' + this.storage.getToken(),
+        'Content-Type': 'application/json',
       });
-      this.http.post(this.endpoint,artist, {headers: headers})
+      return this.http.post<any>(this.endpoint, artist, { headers: headers });
     }
   }
 }

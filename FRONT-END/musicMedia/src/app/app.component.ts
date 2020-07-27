@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StorageService } from './storage.service';
+import { StorageService } from './services/storage.service';
 import { UserInfos } from './dto/userInfos';
 
 @Component({

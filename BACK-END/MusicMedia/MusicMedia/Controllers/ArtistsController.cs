@@ -34,18 +34,17 @@ namespace MusicMedia.Controllers
             try
             {
                 if(!ModelState.IsValid)
-                {
                     return BadRequest();
-                }
+                
                 var user = await _userManager.GetUserAsync(User);
                 await _artistService.AddArtistAsync(model, user);
+
                 return Ok();
             }
             catch (Exception)
             {
                 return BadRequest();
             }
-            
         }
     }
 }

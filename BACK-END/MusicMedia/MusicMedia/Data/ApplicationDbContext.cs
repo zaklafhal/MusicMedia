@@ -10,7 +10,11 @@ namespace MusicMedia.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
+        {   
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         public DbSet<MusicMedia.Models.ApplicationUser> ApplicationUser { get; set; }

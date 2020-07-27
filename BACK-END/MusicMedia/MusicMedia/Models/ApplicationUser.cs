@@ -10,7 +10,7 @@ namespace MusicMedia.Models
     public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
-        public List<Artist> Artists { get; set; }
+        public virtual List<Artist> Artists { get; set; }
         public ApplicationUser()
         {
             Artists = new List<Artist>();
@@ -25,7 +25,8 @@ namespace MusicMedia.Models
 
         public bool ContainsArtist(ArtistDto model)
         {
-            return Artists.Where(a => a.SpotifyId == model.SpotifyId)  == null ;
+            var artists = Artists.Where(a => a.SpotifyId == model.SpotifyId).ToList();
+            return artists.Count  != 0 ;
         }
     }
 }

@@ -40,9 +40,7 @@ export class MainComponent implements OnInit {
     this.spotify.getToken();
   }
   addToList(): void {
-    console.log(this.artist);
-    this.artistService
-      .addArtist(this.artist)
-      .subscribe((res) => console.log(res));
+    //Call the backend to add the artist to the connected user list
+    this.artistService.addArtist(this.artist).subscribe();
   }
 }

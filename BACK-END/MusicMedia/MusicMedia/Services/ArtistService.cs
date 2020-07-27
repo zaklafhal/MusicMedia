@@ -31,7 +31,7 @@ namespace MusicMedia.Services
             if (model == null || user == null)
                 throw new Exception();
             if (user.ContainsArtist(model))
-                throw new Exception();
+                throw new Exception("The artists is already in the user list");
         }
     }
 }

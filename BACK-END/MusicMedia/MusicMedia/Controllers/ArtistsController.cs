@@ -41,9 +41,9 @@ namespace MusicMedia.Controllers
 
                 return Ok();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
     }

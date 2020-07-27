@@ -43,6 +43,6 @@ export class MainComponent implements OnInit {
     //Call the backend to add the artist to the connected user list
     this.artistService
       .addArtist(this.artist)
-      .subscribe((res) => console.log(res));
+      .subscribe((res) => this.artistService.storeArtists(res));
   }
 }

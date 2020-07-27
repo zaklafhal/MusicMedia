@@ -13,6 +13,11 @@ export class ArtistService {
   constructor(private http: HttpClient, private storage: StorageService) {}
   private endpoint = `${environment.endpoint}artists`;
 
+  private artists: Artist[];
+
+  storeArtists(artists : Artist[]){
+    this.artists = artists;
+  }
   addArtist(artist: Artist): Observable<any> {
     console.log(this.storage.user);
     if (this.storage.user) {

@@ -22,6 +22,16 @@ namespace MusicMedia.Models
             Email = registerRequest.Email;
             Artists = new List<Artist>();
         }
+        public List<ArtistDto> GetArtistDtos()
+        {
+            var artistsDtos = new List<ArtistDto>();
+            foreach (var artist in Artists)
+            {
+                var artistDto = new ArtistDto(artist);
+                artistsDtos.Add(artistDto);
+            }
+            return artistsDtos;
+        }
 
         public bool ContainsArtist(ArtistDto model)
         {

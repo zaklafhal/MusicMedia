@@ -38,8 +38,9 @@ namespace MusicMedia.Controllers
                 
                 var user = await _userManager.GetUserAsync(User);
                 await _artistService.AddArtistAsync(model, user);
+                var artists = user.GetArtistDtos();
 
-                return Ok(user.Artists);
+                return Ok(artists);
             }
             catch (Exception e)
             {

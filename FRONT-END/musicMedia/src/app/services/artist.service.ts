@@ -12,20 +12,11 @@ import { StorageService } from './storage.service';
 export class ArtistService {
   constructor(private http: HttpClient, private storage: StorageService) {}
   private endpoint = `${environment.endpoint}artists`;
-
-  private artists: Artist[];
-
-  setArtists(artists: Artist[]): void {
-    this.artists = artists;
-  }
-
-  getArtists(): Artist[] {
-    return this.artists;
-  }
-
+  
   containsArtist(artist: Artist): boolean {
-    if (!this.artists) return false;
-    return this.artists.includes(artist);
+    const artists = this.storage.getArtists();
+    if (!artists) return false;
+    return artists.includes(artist);
   }
 
   addArtist(artist: Artist): Observable<any> {

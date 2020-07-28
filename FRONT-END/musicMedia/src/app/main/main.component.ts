@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { SpotifyService } from '../services/spotify.service';
 import { ArtistService } from '../services/artist.service';
 import { Artist } from './../model/artist';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-main',
@@ -18,7 +19,8 @@ export class MainComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private spotify: SpotifyService,
-    private artistService: ArtistService
+    private artistService: ArtistService,
+    private storage: StorageService
   ) {}
 
   search(form: FormGroup) {
@@ -34,6 +36,7 @@ export class MainComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getToken();
+    console.log(this.artistService.getArtists());
   }
   getToken(): void {
     // get the spotify token
@@ -41,8 +44,8 @@ export class MainComponent implements OnInit {
   }
   addToList(): void {
     //Call the backend to add the artist to the connected user list
-    this.artistService
-      .addArtist(this.artist)
-      .subscribe((res) => this.artistService.storeArtists(res));
+    this.artistService.addArtist(this.artist).subscribe((res) => {
+      this.storage.storeArtists(res);
+    });
   }
 }

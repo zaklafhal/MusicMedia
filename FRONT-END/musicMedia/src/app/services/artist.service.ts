@@ -15,9 +15,19 @@ export class ArtistService {
 
   private artists: Artist[];
 
-  storeArtists(artists : Artist[]){
+  setArtists(artists: Artist[]): void {
     this.artists = artists;
   }
+
+  getArtists(): Artist[] {
+    return this.artists;
+  }
+
+  containsArtist(artist: Artist): boolean {
+    if (!this.artists) return false;
+    return this.artists.includes(artist);
+  }
+
   addArtist(artist: Artist): Observable<any> {
     console.log(this.storage.user);
     if (this.storage.user) {

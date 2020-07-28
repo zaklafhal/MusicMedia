@@ -36,7 +36,6 @@ export class MainComponent implements OnInit {
   }
   ngOnInit(): void {
     this.getToken();
-    console.log(this.artistService.getArtists());
   }
   getToken(): void {
     // get the spotify token

@@ -12,17 +12,16 @@ import { StorageService } from './storage.service';
 export class ArtistService {
   constructor(private http: HttpClient, private storage: StorageService) {}
   private endpoint = `${environment.endpoint}artists`;
-  
+
   containsArtist(artist: Artist): boolean {
     const artists = this.storage.getArtists();
     if (!artists) return false;
-    return artists.includes(artist);
+    const containsArtist = artists.some((a) => a.spotifyId == artist.spotifyId);
+    return containsArtist;
   }
 
   addArtist(artist: Artist): Observable<any> {
-    console.log(this.storage.user);
-    if (this.storage.user) {
-      console.log(this.storage.getToken());
+    if (this.storage.user) { 
       const headers = new HttpHeaders({
         Authorization: 'Bearer  ' + this.storage.getToken(),
         'Content-Type': 'application/json',

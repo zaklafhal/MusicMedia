@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29609.76
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicMedia", "MusicMedia\MusicMedia.csproj", "{65BAEE1E-7D80-4244-96D3-5A9A213E9DE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicMedia", "MusicMedia\MusicMedia.csproj", "{65BAEE1E-7D80-4244-96D3-5A9A213E9DE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicMediaTest", "MusicMediaTest\MusicMediaTest.csproj", "{443EFD98-BCF5-4F4D-B129-5A02D459C5C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{65BAEE1E-7D80-4244-96D3-5A9A213E9DE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65BAEE1E-7D80-4244-96D3-5A9A213E9DE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65BAEE1E-7D80-4244-96D3-5A9A213E9DE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443EFD98-BCF5-4F4D-B129-5A02D459C5C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443EFD98-BCF5-4F4D-B129-5A02D459C5C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443EFD98-BCF5-4F4D-B129-5A02D459C5C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443EFD98-BCF5-4F4D-B129-5A02D459C5C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

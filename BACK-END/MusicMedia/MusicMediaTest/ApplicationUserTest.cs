@@ -38,5 +38,46 @@ namespace MusicMediaTest
             Assert.Equal("2", artistsDto[1].SpotifyId);
             Assert.Equal("3", artistsDto[2].SpotifyId);
         }
+        [Fact]
+        public void TestContainsArtistEmptyList()
+        {
+            var user = new ApplicationUser();
+
+            var artistDto = new ArtistDto("1", "josh", "firstImage");
+
+            var containsArtist = user.ContainsArtist(artistDto);
+
+            Assert.False(containsArtist);
+        }
+        [Fact]
+        public void TestContainsArtistNormalCase()
+        {
+            var user = new ApplicationUser();
+
+            var artist = new Artist("1", "josh", "firstImage");
+
+            user.Artists.Add(artist);
+
+            var artistDto = new ArtistDto("1", "josh", "firstImage");
+
+            var containsArtist = user.ContainsArtist(artistDto);
+
+            Assert.True(containsArtist);
+        }
+        [Fact]
+        public void TestContainsArtistDoesntContains()
+        {
+            var user = new ApplicationUser();
+
+            var artist = new Artist("1", "josh", "firstImage");
+
+            user.Artists.Add(artist);
+
+            var artistDto = new ArtistDto("2", "jack", "secondImage");
+
+            var containsArtist = user.ContainsArtist(artistDto);
+
+            Assert.False(containsArtist);
+        }
     }
 }

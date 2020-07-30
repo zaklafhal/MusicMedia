@@ -18,6 +18,12 @@ namespace MusicMedia.Models.Dto
         {
 
         }
+        public ArtistDto(string spotifyId, string name, string image)
+        {
+            SpotifyId = spotifyId;
+            Name = name;
+            Image = image;
+        }
         public ArtistDto(Artist artist)
         {
             SpotifyId = artist.SpotifyId;

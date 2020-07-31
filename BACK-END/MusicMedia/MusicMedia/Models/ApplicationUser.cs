@@ -33,7 +33,7 @@ namespace MusicMedia.Models
             return artistsDtos;
         }
 
-        public bool ContainsArtist(ArtistDto model)
+        public virtual bool ContainsArtist(ArtistDto model)
         {
             var artists = Artists.Where(a => a.SpotifyId == model.SpotifyId).ToList();
             return artists.Count  != 0 ;

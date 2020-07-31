@@ -22,7 +22,7 @@ namespace MusicMedia.Models
             Email = registerRequest.Email;
             Artists = new List<Artist>();
         }
-        public List<ArtistDto> GetArtistDtos()
+        public virtual List<ArtistDto> GetArtistDtos()
         {
             var artistsDtos = new List<ArtistDto>();
             foreach (var artist in Artists)

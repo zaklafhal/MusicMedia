@@ -42,7 +42,8 @@ namespace MusicMedia.Services
 
         public async Task<bool> IsValidUser(LoginRequest loginRequest)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(loginRequest.Email);
+            return await _userManager.CheckPasswordAsync(user, loginRequest.Password);
         }
     }
 }

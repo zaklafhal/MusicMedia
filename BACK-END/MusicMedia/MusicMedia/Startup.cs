@@ -31,6 +31,7 @@ namespace MusicMedia
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IArtistService, ArtistService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)

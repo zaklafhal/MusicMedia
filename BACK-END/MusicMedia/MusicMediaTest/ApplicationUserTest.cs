@@ -35,6 +35,8 @@ namespace MusicMediaTest
 
             Assert.False(artistsDto.IsNullOrEmpty());
             Assert.Equal("1", artistsDto[0].SpotifyId);
+            Assert.Equal("josh", artistsDto[0].Name);
+            Assert.Equal("firstImage", artistsDto[0].Image);
             Assert.Equal("2", artistsDto[1].SpotifyId);
             Assert.Equal("3", artistsDto[2].SpotifyId);
         }

@@ -7,5 +7,6 @@ namespace MusicMedia.Services
 {
     public interface ITokenService
     {
+
     }
 }

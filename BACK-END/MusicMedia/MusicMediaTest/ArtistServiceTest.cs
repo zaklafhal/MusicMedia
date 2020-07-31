@@ -9,6 +9,7 @@ using MusicMedia.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace MusicMediaTest
@@ -98,6 +99,26 @@ namespace MusicMediaTest
             user.Setup(a => a.ContainsArtist(model)).Returns(false);
 
             service.ValidateArtist(model, user.Object);
+        }
+        [Fact]
+        public async Task TestAddArtistNormalCase()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+
+            var user = new ApplicationUser();
+
+            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
+
+            var service = new ArtistService(context);
+
+            var model = new ArtistDto("1", "josh", "firstImage");
+
+            await service.AddArtistAsync(model, user);
+
+            Assert.NotEmpty(user.Artists);
+            Assert.Equal("1", user.Artists[0].SpotifyId);
+            Assert.NotEmpty(context.Artists);
+            Assert.Equal(user.Artists[0], await context.Artists.FirstOrDefaultAsync());
         }
     }
 }

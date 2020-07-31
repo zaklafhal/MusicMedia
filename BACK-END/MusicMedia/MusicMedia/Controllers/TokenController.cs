@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using MusicMedia.Data;
 using MusicMedia.Models;
 using MusicMedia.Models.Dto;
+using MusicMedia.Services;
 
 namespace MusicMedia.Controllers
 {
@@ -19,21 +20,21 @@ namespace MusicMedia.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITokenService _service;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public TokenController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public TokenController(ITokenService service, UserManager<ApplicationUser> userManager)
         {
-            _context = context;
             _userManager = userManager;
+            _service = service;
         }
         // POST: api/Test
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] LoginRequest loginRequest)
         {
-            if (await IsValidUser(loginRequest))
+            if (await _service.IsValidUser(loginRequest))
             {
-                return new ObjectResult(await GenerateToken(loginRequest.Email));
+                return new ObjectResult(await _service.GenerateToken(loginRequest.Email));
             }
             else
             {
@@ -42,30 +43,5 @@ namespace MusicMedia.Controllers
 
         }
 
-        private async Task<dynamic> GenerateToken(string email)
-        {
-            var user = await _userManager.FindByNameAsync(email);
-            var userInfos = new UserInfo(user);
-            var claims = new List<Claim> { 
-                new Claim("user" , userInfos.ToString()),
-                new Claim(ClaimTypes.Email, email),
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
-                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString())
-            };
-            var token = new JwtSecurityToken(
-                new JwtHeader(
-                    new SigningCredentials(
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes("uhsnsdsdheweqys87272871hwn21y1")),
-                        SecurityAlgorithms.HmacSha256)),
-                        new JwtPayload(claims));
-            var result = new { Access_Token = new JwtSecurityTokenHandler().WriteToken(token) };
-            return result;
-        }
-        private async Task<bool> IsValidUser(LoginRequest loginRequest)
-        {
-            var user = await _userManager.FindByEmailAsync(loginRequest.Email);
-            return await _userManager.CheckPasswordAsync(user, loginRequest.Password);
-        }
     }
 }

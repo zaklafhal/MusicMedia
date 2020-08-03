@@ -33,7 +33,6 @@ namespace MusicMediaTest
             var result = await service.IsValidUser(loginRequest);
 
             Assert.True(result);
-
         }
         [Fact]
         public async Task TestIsValidUserWithInValidUser()
@@ -55,7 +54,45 @@ namespace MusicMediaTest
             var result = await service.IsValidUser(loginRequest);
 
             Assert.False(result);
-
         }
+        [Fact]
+        public async Task TestGenerateTokenWithExistingUser()
+        {
+            var userStoreMock = Mock.Of<IUserStore<ApplicationUser>>();
+
+            var userManagerMock = new Mock<UserManager<ApplicationUser>>(userStoreMock, null, null, null, null, null, null, null, null);
+
+            var email = "test@test.com";
+
+            var user = new ApplicationUser();
+
+            userManagerMock.Setup(u => u.FindByEmailAsync(email)).ReturnsAsync(user);
+
+            var service = new TokenService(userManagerMock.Object);
+
+            var result = await service.GenerateToken(email);
+
+            Assert.NotNull(result);
+        }
+        [Fact]
+        public async Task TestGenerateTokenWithInexistingUser()
+        {
+            var userStoreMock = Mock.Of<IUserStore<ApplicationUser>>();
+
+            var userManagerMock = new Mock<UserManager<ApplicationUser>>(userStoreMock, null, null, null, null, null, null, null, null);
+
+            var email = "test@test.com";
+
+            ApplicationUser user = null;
+
+            userManagerMock.Setup(u => u.FindByEmailAsync(email)).ReturnsAsync(user);
+
+            var service = new TokenService(userManagerMock.Object);
+
+            var result = await service.GenerateToken(email);
+
+            Assert.Null(result);
+        }
+
     }
 }

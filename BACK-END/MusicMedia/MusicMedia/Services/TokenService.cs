@@ -5,7 +5,6 @@ using MusicMedia.Models.Dto;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +20,11 @@ namespace MusicMedia.Services
         }
         public async Task<dynamic> GenerateToken(string email)
         {
-            var user = await _userManager.FindByNameAsync(email);
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+                return null;
+
             var userInfos = new UserInfo(user);
             var claims = new List<Claim> {
                 new Claim("user" , userInfos.ToString()),

@@ -39,7 +39,8 @@ namespace MusicMedia.Services
                         new SymmetricSecurityKey(Encoding.UTF8.GetBytes("uhsnsdsdheweqys87272871hwn21y1")),
                         SecurityAlgorithms.HmacSha256)),
                         new JwtPayload(claims));
-            var result = new { Access_Token = new JwtSecurityTokenHandler().WriteToken(token) };
+            var access_token = new JwtSecurityTokenHandler().WriteToken(token);
+            var result = new Token(access_token);
             return result;
         }
 

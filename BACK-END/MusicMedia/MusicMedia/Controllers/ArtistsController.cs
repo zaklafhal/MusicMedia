@@ -34,7 +34,7 @@ namespace MusicMedia.Controllers
             try
             {
                 if(!ModelState.IsValid)
-                    return BadRequest();
+                    return BadRequest(ModelState);
                 
                 var user = await _userManager.GetUserAsync(User);
                 await _artistService.AddArtistAsync(model, user);

@@ -35,6 +35,23 @@ namespace MusicMediaTest
             Assert.Equal(200, result.StatusCode);
             Assert.Equal(token, result.Value);         
         }
+        [Fact]
+        public async Task TestLoginWithInvalidCredentials()
+        {
+            var loginRequest = new LoginRequest("test@test.com", "SecretPassw0rd");
 
+            var tokenServiceMock = new Mock<ITokenService>();
+
+            tokenServiceMock.Setup(s => s.IsValidUser(loginRequest)).ReturnsAsync(false);
+
+            var controller = new TokenController(tokenServiceMock.Object);
+
+            var result = await controller.Post(loginRequest) as ObjectResult;
+
+            var errorMsg = "Invalid Email or Password";
+
+            Assert.Equal(400, result.StatusCode);
+            Assert.Equal(errorMsg, result.Value);
+        }
     }
 }

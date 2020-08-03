@@ -38,7 +38,11 @@ namespace MusicMedia.Controllers
         }
 
         // POST: api/User
-        //Register an user
+        /// <summary>
+        /// Register the user
+        /// </summary>
+        /// <param name="registerRequest">An Object That contains the informations about the user</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] RegisterRequest registerRequest)
         {

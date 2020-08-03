@@ -21,13 +21,16 @@ namespace MusicMedia.Controllers
     public class TokenController : ControllerBase
     {
         private readonly ITokenService _service;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TokenController(ITokenService service, UserManager<ApplicationUser> userManager)
+        public TokenController(ITokenService service)
         {
-            _userManager = userManager;
             _service = service;
         }
+        /// <summary>
+        /// Authenticate the user
+        /// </summary>
+        /// <param name="loginRequest"> An object that contains the login credentials of the user</param>
+        /// <returns>An object that contains the Access_token</returns>
         // POST: api/Test
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] LoginRequest loginRequest)

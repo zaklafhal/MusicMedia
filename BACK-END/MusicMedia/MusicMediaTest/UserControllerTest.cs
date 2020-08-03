@@ -38,11 +38,30 @@ namespace MusicMediaTest
 
             var result = await controller.Post(registerRequest) as OkResult;
 
-            var users = context.ApplicationUser.ToList();
             Assert.Equal(200, result.StatusCode);
-            //Assert.Equal(user.Email, users[0].Email);
-            //Assert.Equal(user.Name, users[0].Name);
+        }
+        [Fact]
+        public async Task TestRegisterUserFails()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
 
+            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
+
+            var registerRequest = new RegisterRequest("test@test.com", "Jack", "SecretPassw0rd!", "SecretPassw0rd!");
+
+            var user = new ApplicationUser(registerRequest);
+
+            var userStoreMock = Mock.Of<IUserStore<ApplicationUser>>();
+
+            var userManagerMock = new Mock<UserManager<ApplicationUser>>(userStoreMock, null, null, null, null, null, null, null, null);
+
+            userManagerMock.Setup(u => u.CreateAsync(It.IsAny<ApplicationUser>(), It.IsAny<string>())).ReturnsAsync(new IdentityResult()).Verifiable();
+
+            var controller = new UserController(context, userManagerMock.Object);
+
+            var result = await controller.Post(registerRequest) as BadRequestObjectResult;
+
+            Assert.Equal(400, result.StatusCode);
         }
     }
 }

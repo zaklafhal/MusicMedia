@@ -8,7 +8,7 @@ namespace MusicMedia.Services
 {
     public interface ITokenService
     {
-        Task<dynamic> GenerateToken(string email);
+        Task<Token> GenerateToken(string email);
         Task<bool> IsValidUser(LoginRequest loginRequest);
     }
 }

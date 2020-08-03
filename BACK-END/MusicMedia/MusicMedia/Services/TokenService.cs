@@ -18,7 +18,7 @@ namespace MusicMedia.Services
         {
             _userManager = userManager;
         }
-        public async Task<dynamic> GenerateToken(string email)
+        public async Task<Token> GenerateToken(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
 

@@ -37,13 +37,11 @@ namespace MusicMedia.Controllers
         {
             if (await _service.IsValidUser(loginRequest))
             {
-                return new ObjectResult(await _service.GenerateToken(loginRequest.Email));
-            }
-            else
-            {
-                return BadRequest("Invalid Email or Password");
+                return Ok(await _service.GenerateToken(loginRequest.Email));
             }
 
+            return BadRequest("Invalid Email or Password");
+            
         }
 
     }

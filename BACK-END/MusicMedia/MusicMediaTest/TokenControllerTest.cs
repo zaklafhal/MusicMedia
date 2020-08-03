@@ -22,9 +22,11 @@ namespace MusicMediaTest
 
             tokenServiceMock.Setup(s => s.IsValidUser(loginRequest)).ReturnsAsync(true);
 
-            dynamic token = new { Access_token = "myAccessToken" };
+            var access_token = "myAccessToken";
 
-            tokenServiceMock.Setup(s => s.GenerateToken(loginRequest.Email)).Returns(token);
+            var token = new Token(access_token);
+
+            tokenServiceMock.Setup(s => s.GenerateToken(loginRequest.Email)).ReturnsAsync(token);
 
             var controller = new TokenController(tokenServiceMock.Object);
 

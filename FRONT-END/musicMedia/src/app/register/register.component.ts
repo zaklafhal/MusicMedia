@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   register(form: FormGroup): void {
     const registerRequest = this.getRegisterRequest(form);
     console.log(registerRequest);
-  }
+  }  
   getRegisterRequest(form: FormGroup): RegisterRequest {
     const { controls } = form;
     const registerRequest = {

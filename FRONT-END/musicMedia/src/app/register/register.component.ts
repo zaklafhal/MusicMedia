@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { RegisterRequest } from '../dto/registerRequest';
 import { UserService } from '../services/user.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-register',
@@ -18,14 +19,23 @@ export class RegisterComponent implements OnInit {
   error: string;
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService
+    private userService: UserService,
+    private storageService: StorageService
   ) {}
   register(form: FormGroup): void {
     const registerRequest = this.getRegisterRequest(form);
     console.log(registerRequest);
-    this.userService
-      .register(registerRequest)
-      .subscribe((res) => console.log(res));
+    this.userService.register(registerRequest).subscribe((res) => {
+      const { email, password } = registerRequest;
+      const loginRequest = {
+        email: email,
+        password: password,
+      };
+      this.userService.login(loginRequest).subscribe((res) => {
+        this.storageService.storeToken(res);
+        location.assign('/main');
+      });
+    });
   }
   getRegisterRequest(form: FormGroup): RegisterRequest {
     const { controls } = form;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { RegisterRequest } from '../dto/registerRequest';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,22 @@ export class RegisterComponent implements OnInit {
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],
   });
+  error: string;
   constructor(private formBuilder: FormBuilder) {}
+  register(form: FormGroup): void {
+    const registerRequest = this.getRegisterRequest(form);
+    console.log(registerRequest);
+  }
+  getRegisterRequest(form: FormGroup): RegisterRequest {
+    const { controls } = form;
+    const registerRequest = {
+      email: controls.email.value,
+      name: controls.name.value,
+      password: controls.password.value,
+      confirmPassword: controls.confirmPassword.value,
+    };
+    return registerRequest;
+  }
 
   ngOnInit(): void {}
 }

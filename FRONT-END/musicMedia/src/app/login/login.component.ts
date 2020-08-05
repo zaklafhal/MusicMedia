@@ -38,9 +38,10 @@ export class LoginComponent implements OnInit {
     );
   }
   getLoginRequest(form: FormGroup): LoginRequest {
+    const { controls } = form;
     const loginRequest = {
-      email: form.controls.email.value,
-      password: form.controls.password.value,
+      email: controls.email.value,
+      password: controls.password.value,
     };
     return loginRequest;
   }

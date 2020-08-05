@@ -47,6 +47,12 @@ export class RegisterComponent implements OnInit {
     };
     return registerRequest;
   }
+  validatePasswords(form: FormGroup) { 
+  const password = form.get('password').value;
+  const confirmPassword = form.get('confirmPassword').value;
+
+  return password === confirmPassword ? null : { notSame: true }     
+}
 
   ngOnInit(): void {}
 }

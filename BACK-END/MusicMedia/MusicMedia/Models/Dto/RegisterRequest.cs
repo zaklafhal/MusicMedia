@@ -12,6 +12,10 @@ namespace MusicMedia.Models.Dto
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
 
+        public RegisterRequest()
+        {
+
+        }
         public RegisterRequest(string email, string name ,string password, string confirmPassword)
         {
             Email = email;

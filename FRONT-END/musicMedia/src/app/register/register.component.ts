@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { RegisterRequest } from '../dto/registerRequest';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -15,11 +16,17 @@ export class RegisterComponent implements OnInit {
     confirmPassword: ['', Validators.required],
   });
   error: string;
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userService: UserService
+  ) {}
   register(form: FormGroup): void {
     const registerRequest = this.getRegisterRequest(form);
     console.log(registerRequest);
-  }  
+    this.userService
+      .register(registerRequest)
+      .subscribe((res) => console.log(res));
+  }
   getRegisterRequest(form: FormGroup): RegisterRequest {
     const { controls } = form;
     const registerRequest = {

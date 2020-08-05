@@ -1,1 +1,58 @@
-<p>register works!</p>
+<form (ngSubmit)="register(form)" [formGroup]="form">
+    <div class="col center">
+      <div
+        class="alert alert-danger"
+        *ngIf="error"
+      >
+        {{ error }}
+      </div>
+      <div class="row">
+        <app-input
+          class="input"
+          formControlName="email"
+          [type]="'email'"
+          [placeholder]="'Email'"
+          [isRequired]="true"
+          [icon]="'fas fa-envelope'"
+        ></app-input>
+      </div>
+      <div class="row">
+        <app-input
+          class="input"
+          formControlName="name"
+          [type]="'text'"
+          [placeholder]="'Name'"
+          [isRequired]="true"
+          [icon]="'fas fa-lock'"
+        ></app-input>
+      </div>
+      <div class="row">
+        <app-input
+          class="input"
+          formControlName="password"
+          [type]="'password'"
+          [placeholder]="'Password'"
+          [isRequired]="true"
+          [icon]="'fas fa-lock'"
+        ></app-input>
+      </div>
+      <div class="row">
+        <app-input
+          class="input"
+          formControlName="confirmPassword"
+          [type]="'password'"
+          [placeholder]="'Password Confirmation'"
+          [isRequired]="true"
+          [icon]="'fas fa-lock'"
+        ></app-input>
+      </div>
+      <button
+        class="btn btn-primary signUpBtn"
+        type="submit"
+        [disabled]="!form.valid"
+      >
+        Sign Up
+      </button>
+    </div>
+  </form>
+  

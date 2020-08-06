@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { RegisterRequest } from '../dto/registerRequest';
 import { UserService } from '../services/user.service';
 import { StorageService } from '../services/storage.service';
+import { LoginRequest } from '../dto/loginRequest';
 
 @Component({
   selector: 'app-register',
@@ -25,16 +26,22 @@ export class RegisterComponent implements OnInit {
   register(form: FormGroup): void {
     const registerRequest = this.getRegisterRequest(form);
     console.log(registerRequest);
-    this.userService.register(registerRequest).subscribe((res) => {
-      const { email, password } = registerRequest;
-      const loginRequest = {
-        email: email,
-        password: password,
-      };
-      this.userService.login(loginRequest).subscribe((res) => {
-        this.storageService.storeToken(res);
-        location.assign('/main');
-      });
+    this.userService.register(registerRequest).subscribe(
+      (res) => {
+        const { email, password } = registerRequest;
+        const loginRequest = {
+          email: email,
+          password: password,
+        };
+        this.login(loginRequest);
+      },
+      (error) => (this.error = this.userService.handleError(error))
+    );
+  }
+  login(loginRequest: LoginRequest) {
+    this.userService.login(loginRequest).subscribe((res) => {
+      this.storageService.storeToken(res);
+      location.assign('/main');
     });
   }
   getRegisterRequest(form: FormGroup): RegisterRequest {
@@ -47,6 +54,5 @@ export class RegisterComponent implements OnInit {
     };
     return registerRequest;
   }
-
   ngOnInit(): void {}
 }

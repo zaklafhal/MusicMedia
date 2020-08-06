@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import {
   HttpClient,
-  HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
 import { LoginRequest } from './../dto/loginRequest';
 import { environment } from './../../environments/environment';
 import { RegisterRequest } from '../dto/registerRequest';
-import { catchError } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',

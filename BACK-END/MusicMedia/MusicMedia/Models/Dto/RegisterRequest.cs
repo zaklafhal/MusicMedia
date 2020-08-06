@@ -16,7 +16,7 @@ namespace MusicMedia.Models.Dto
         [Required]
         public string Password { get; set; }
         [Required]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "The Passwords do not match")]
         public string ConfirmPassword { get; set; }
 
         public RegisterRequest()

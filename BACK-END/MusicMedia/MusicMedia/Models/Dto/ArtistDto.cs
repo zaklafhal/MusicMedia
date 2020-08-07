@@ -24,6 +24,16 @@ namespace MusicMedia.Models.Dto
             Name = name;
             Image = image;
         }
+        public virtual List<ArtistDto> GetArtistDtos(List<Artist> artists)
+        {
+            var artistsDtos = new List<ArtistDto>();
+            foreach (var artist in artists)
+            {
+                var artistDto = new ArtistDto(artist);
+                artistsDtos.Add(artistDto);
+            }
+            return artistsDtos;
+        }
         public ArtistDto(Artist artist)
         {
             SpotifyId = artist.SpotifyId;

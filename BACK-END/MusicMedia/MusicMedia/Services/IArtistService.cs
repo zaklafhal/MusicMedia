@@ -12,6 +12,6 @@ namespace MusicMedia.Services
     {
         Task AddArtistAsync(ArtistDto artist, ApplicationUser user);
         void ValidateArtist(ArtistDto artist, ApplicationUser user);
-
+        List<Artist> GetArtists(ApplicationUser user);
     }
 }

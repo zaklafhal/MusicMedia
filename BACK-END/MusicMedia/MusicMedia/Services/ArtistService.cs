@@ -25,6 +25,20 @@ namespace MusicMedia.Services
             await _context.Artists.AddAsync(artist);
             await _context.SaveChangesAsync(); 
         }
+
+        public List<Artist> GetArtists(ApplicationUser user)
+        {
+            if(user == null)
+                throw new Exception();
+
+            if (!user.HasArtists())
+                throw new Exception("The user does not have artists on his list !");
+
+            return user.Artists;
+
+
+        }
+
         public void ValidateArtist(ArtistDto model, ApplicationUser user)
         {
 

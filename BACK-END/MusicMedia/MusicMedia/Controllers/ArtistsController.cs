@@ -25,6 +25,25 @@ namespace MusicMedia.Controllers
             _userManager = userManager;
             _artistService = artistService;
         }
+        [Authorize]
+        [HttpGet]
+        [Route("")]
+        public async Task<IActionResult> GetArtists()
+        {
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var artists = _artistService.GetArtists(user);
+                var artistDto = new ArtistDto();
+                var artistDtos = artistDto.GetArtistDtos(artists);
+                return Ok(artistDtos); 
+            }
+            catch (Exception e)
+            {
+
+                return BadRequest(e.Message);
+            }
+        }
 
         [Authorize]
         [HttpPost]

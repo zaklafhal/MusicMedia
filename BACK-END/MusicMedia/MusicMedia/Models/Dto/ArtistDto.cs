@@ -27,10 +27,13 @@ namespace MusicMedia.Models.Dto
         public virtual List<ArtistDto> GetArtistDtos(List<Artist> artists)
         {
             var artistsDtos = new List<ArtistDto>();
-            foreach (var artist in artists)
+            if(artists != null)
             {
-                var artistDto = new ArtistDto(artist);
-                artistsDtos.Add(artistDto);
+                foreach (var artist in artists)
+                {
+                    var artistDto = new ArtistDto(artist);
+                    artistsDtos.Add(artistDto);
+                }
             }
             return artistsDtos;
         }

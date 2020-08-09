@@ -35,8 +35,6 @@ namespace MusicMedia.Services
                 throw new Exception("The user does not have artists on his list !");
 
             return user.Artists;
-
-
         }
 
         public void ValidateArtist(ArtistDto model, ApplicationUser user)

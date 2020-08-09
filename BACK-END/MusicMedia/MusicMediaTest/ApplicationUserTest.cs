@@ -81,5 +81,27 @@ namespace MusicMediaTest
 
             Assert.False(containsArtist);
         }
+        [Fact]
+        public void TestHasArtistsWithArtists()
+        {
+            var user = new ApplicationUser();
+
+            var firstArtist = new Artist("1", "josh", "firstImage");
+            var secondArtist = new Artist("2", "jack", "secondImage");
+            var thirdArtist = new Artist("3", "jhon", "thirdImage");
+
+            user.Artists.Add(firstArtist);
+            user.Artists.Add(secondArtist);
+            user.Artists.Add(thirdArtist);
+
+            Assert.True(user.HasArtists());
+        }
+        [Fact]
+        public void TestHasArtistsWithNoArtist()
+        {
+            var user = new ApplicationUser();
+
+            Assert.False(user.HasArtists());
+        }
     }
 }

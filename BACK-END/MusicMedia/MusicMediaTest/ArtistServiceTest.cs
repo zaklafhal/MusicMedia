@@ -15,8 +15,6 @@ using Xunit;
 namespace MusicMediaTest
 {
     public class ArtistServiceTest
-
-
     {
         [Fact]
         public void TestValidateArtistWithModelNull()
@@ -119,6 +117,60 @@ namespace MusicMediaTest
             Assert.Equal("1", user.Artists[0].SpotifyId);
             Assert.NotEmpty(context.Artists);
             Assert.Equal(user.Artists[0], await context.Artists.FirstOrDefaultAsync());
+        }
+        [Fact]
+        public void TestGetArtistsSimpleCase()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+
+            var user =  new ApplicationUser();
+
+            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
+
+            var service = new ArtistService(context);
+
+            var firstArtist = new Artist("1", "josh", "firstImage");
+            var secondArtist = new Artist("2", "jack", "secondImage");
+            var thirdArtist = new Artist("3", "jhon", "thirdImage");
+
+
+            user.Artists.Add(firstArtist);
+            user.Artists.Add(secondArtist);
+            user.Artists.Add(thirdArtist);
+
+            var result = service.GetArtists(user);
+
+            Assert.NotEmpty(result);
+            Assert.Equal(user.Artists.Count, result.Count);
+            Assert.Equal(user.Artists[0].SpotifyId, result[0].SpotifyId); 
+            Assert.Equal(user.Artists[1].SpotifyId, result[1].SpotifyId);
+            Assert.Equal(user.Artists[2].SpotifyId, result[2].SpotifyId);
+        }
+        [Fact]
+        public void TestGetArtistsWithNullUser()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+
+            ApplicationUser user = null;
+
+            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
+
+            var service = new ArtistService(context);
+
+            Assert.Throws<Exception>(() => service.GetArtists(user));
+        }
+        [Fact]
+        public void TestGetArtistsWithUserWithNoArtists()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+
+            var user = new ApplicationUser();
+
+            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
+
+            var service = new ArtistService(context);
+
+            Assert.Throws<Exception>(() => service.GetArtists(user));
         }
     }
 }

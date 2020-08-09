@@ -79,5 +79,70 @@ namespace MusicMediaTest
 
             Assert.Equal(400, status);
         }
+        [Fact]
+        public async Task TestGetArtistsSimpleCase()
+        {
+            var userMock = new Mock<ApplicationUser>();
+
+            var userStoreMock = Mock.Of<IUserStore<ApplicationUser>>();
+
+            var userManagerMock = new Mock<UserManager<ApplicationUser>>(userStoreMock, null, null, null, null, null, null, null, null);
+
+            userManagerMock.Setup(u => u.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(userMock.Object);
+
+            var artistServiceMock = new Mock<IArtistService>();
+
+            var artists = new List<Artist>();
+
+            var firstArtist = new Artist("1", "josh", "firstImage");
+            var secondArtist = new Artist("2", "jack", "secondImage");
+            var thirdArtist = new Artist("3", "jhon", "thirdImage");
+
+            artists.Add(firstArtist);
+            artists.Add(secondArtist);
+            artists.Add(thirdArtist);
+
+            artistServiceMock.Setup(s => s.GetArtists(userMock.Object)).Returns(artists);
+
+            var controller = new ArtistsController(artistServiceMock.Object, userManagerMock.Object);
+
+            var result = await controller.GetArtists() as ObjectResult;
+
+            var status = result.StatusCode;
+
+            var artistDtos = result.Value as List<ArtistDto>;
+
+            Assert.Equal(200, status);
+            Assert.IsType<List<ArtistDto>>(result.Value);
+            Assert.Equal(artists.Count, artistDtos.Count);
+            Assert.Equal(artists[0].SpotifyId, artistDtos[0].SpotifyId);
+            Assert.Equal(artists[1].SpotifyId, artistDtos[1].SpotifyId);
+            Assert.Equal(artists[2].SpotifyId, artistDtos[2].SpotifyId);
+        }
+        [Fact]
+        public async Task TestGetArtistsExceptionCase()
+        {
+            var userMock = new Mock<ApplicationUser>();
+
+            var userStoreMock = Mock.Of<IUserStore<ApplicationUser>>();
+
+            var userManagerMock = new Mock<UserManager<ApplicationUser>>(userStoreMock, null, null, null, null, null, null, null, null);
+
+            userManagerMock.Setup(u => u.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(userMock.Object);
+
+            var artistServiceMock = new Mock<IArtistService>();
+
+            artistServiceMock.Setup(s => s.GetArtists(userMock.Object)).Throws(new Exception());
+
+            var controller = new ArtistsController(artistServiceMock.Object, userManagerMock.Object);
+
+            var result = await controller.GetArtists() as ObjectResult;
+
+            var status = result.StatusCode;
+
+            var artistDtos = result.Value as List<ArtistDto>;
+
+            Assert.Equal(400, status);
+        }
     }
 }

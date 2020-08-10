@@ -20,8 +20,18 @@ export class ArtistService {
     return containsArtist;
   }
 
+  getArtists(): Observable<Artist[]> {
+    if (this.storage.user) {
+      const headers = new HttpHeaders({
+        Authorization: 'Bearer  ' + this.storage.getToken(),
+        'Content-Type': 'application/json',
+      });
+      return this.http.get<Artist[]>(this.endpoint, { headers: headers });
+    }
+  }
+
   addArtist(artist: Artist): Observable<any> {
-    if (this.storage.user) { 
+    if (this.storage.user) {
       const headers = new HttpHeaders({
         Authorization: 'Bearer  ' + this.storage.getToken(),
         'Content-Type': 'application/json',

@@ -9,10 +9,13 @@ import { StorageService } from '../services/storage.service';
 })
 export class ArtistListComponent implements OnInit {
   artists: Artist[];
+  count: number;
+
   constructor(private storage: StorageService) {}
 
   getArtists(): void {
     this.artists = this.storage.getArtists();
+    this.count = this.artists.length;
   }
 
   ngOnInit(): void {

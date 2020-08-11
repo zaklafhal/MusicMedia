@@ -1,3 +1,20 @@
-<div *ngFor="let artist of artists">
-  <img src="{{artist.image}}" />
+<div class="row">
+    <div class="col">
+        <h2>My artists : {{count}}</h2>
+        
+    </div>
+</div>
+<div class="row">
+  <div *ngFor="let artist of artists">
+    <div class="col">
+      <div class="card" style="width: 20rem; margin: 20px;">
+        <img [src]="artist.image" class="card-img-top" />
+        <div class="card-body">
+          <h5 class="card-title">{{ artist.name }}</h5>
+          <a href="#" class="btn btn-primary detailsBtn">Details</a>
+          <a class="btn btn-danger actionBtn">Remove</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

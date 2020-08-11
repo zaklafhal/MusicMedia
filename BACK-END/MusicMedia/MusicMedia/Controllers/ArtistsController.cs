@@ -66,5 +66,26 @@ namespace MusicMedia.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Authorize]
+        [HttpDelete]
+        [Route("")]
+        public async Task<IActionResult> RemoveArtists(ArtistDto model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                var user = await _userManager.GetUserAsync(User);
+                await _artistService.RemoveArtistAsync(model, user);
+                var artists = user.GetArtistDtos();
+
+                return Ok(artists);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

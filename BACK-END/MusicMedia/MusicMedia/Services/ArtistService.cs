@@ -1,4 +1,5 @@
-﻿using MusicMedia.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicMedia.Data;
 using MusicMedia.Models;
 using MusicMedia.Models.Dto;
 using System;
@@ -44,7 +45,7 @@ namespace MusicMedia.Services
             ValidateArtist(model, user);
             if (!user.ContainsArtist(model))
                 throw new Exception("The artists is not in the user list");
-            var artist = new Artist(model);
+            var artist = await _context.Artists.Where(a => a.ApplicationUserId == user.Id && a.SpotifyId == model.SpotifyId).FirstOrDefaultAsync();
             user.Artists.Remove(artist);
             _context.Artists.Remove(artist);
             await _context.SaveChangesAsync();

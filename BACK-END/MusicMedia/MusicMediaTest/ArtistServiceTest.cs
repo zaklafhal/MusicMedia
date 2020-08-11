@@ -65,23 +65,6 @@ namespace MusicMediaTest
 
         }
         [Fact]
-        public void TestValidateArtistWithUserContainsArtists()
-        {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
-
-            var user = new Mock<ApplicationUser>();
-
-            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
-
-            var service = new ArtistService(context);
-
-            var model = new ArtistDto("1", "josh", "firstImage");
-
-            user.Setup( a => a.ContainsArtist(model)).Returns(true);
-
-            Assert.Throws<Exception>(() => service.ValidateArtist(model, user.Object ));
-        }
-        [Fact]
         public void TestValidateArtistWorkingCase()
         {
             var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");

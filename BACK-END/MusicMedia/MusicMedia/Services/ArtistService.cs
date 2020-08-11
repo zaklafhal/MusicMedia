@@ -19,6 +19,8 @@ namespace MusicMedia.Services
         public async Task AddArtistAsync(ArtistDto model, ApplicationUser user)
         {
             ValidateArtist(model, user);
+            if (user.ContainsArtist(model))
+                throw new Exception("The artists is already in the user list");
             var artist = new Artist(model);
             artist.ApplicationUserId = user.Id;
             user.Artists.Add(artist);
@@ -37,13 +39,22 @@ namespace MusicMedia.Services
             return user.Artists;
         }
 
+        public async Task RemoveArtistAsync(ArtistDto model, ApplicationUser user)
+        {
+            ValidateArtist(model, user);
+            if (!user.ContainsArtist(model))
+                throw new Exception("The artists is not in the user list");
+            var artist = new Artist(model);
+            user.Artists.Remove(artist);
+            _context.Artists.Remove(artist);
+            await _context.SaveChangesAsync();
+        }
+
         public void ValidateArtist(ArtistDto model, ApplicationUser user)
         {
 
             if (model == null || user == null)
                 throw new Exception();
-            if (user.ContainsArtist(model))
-                throw new Exception("The artists is already in the user list");
         }
     }
 }

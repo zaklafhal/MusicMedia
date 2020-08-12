@@ -50,7 +50,7 @@ namespace MusicMedia.Services
             _context.Artists.Remove(artist);
             await _context.SaveChangesAsync();
         }
-        public async Task<Artist> GetArtist(ArtistDto model ,ApplicationUser user)
+        private async Task<Artist> GetArtist(ArtistDto model ,ApplicationUser user)
         {
             var artist = await _context.Artists.Where(a => a.ApplicationUserId == user.Id && a.SpotifyId == model.SpotifyId).FirstOrDefaultAsync();
             return artist;

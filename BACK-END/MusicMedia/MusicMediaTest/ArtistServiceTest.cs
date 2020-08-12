@@ -8,6 +8,7 @@ using MusicMedia.Models.Dto;
 using MusicMedia.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -19,7 +20,7 @@ namespace MusicMediaTest
         [Fact]
         public void TestValidateArtistWithModelNull()
         {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_validate)");
 
             var context = new ApplicationDbContext(dbOptionsBuilder.Options);
 
@@ -35,7 +36,7 @@ namespace MusicMediaTest
         [Fact]
         public void TestValidateArtistWithUserNull()
         {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_validate)");
 
             var context = new ApplicationDbContext(dbOptionsBuilder.Options);
 
@@ -51,7 +52,7 @@ namespace MusicMediaTest
         [Fact]
         public void TestValidateArtistWithUserAndModelNull()
         {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_validate)");
 
             var context = new ApplicationDbContext(dbOptionsBuilder.Options);
 
@@ -67,7 +68,7 @@ namespace MusicMediaTest
         [Fact]
         public void TestValidateArtistWorkingCase()
         {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_validate)");
 
             var user = new Mock<ApplicationUser>();
 
@@ -84,7 +85,7 @@ namespace MusicMediaTest
         [Fact]
         public async Task TestAddArtistNormalCase()
         {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_add)");
 
             var user = new ApplicationUser();
 
@@ -104,7 +105,7 @@ namespace MusicMediaTest
         [Fact]
         public void TestGetArtistsSimpleCase()
         {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_get)");
 
             var user =  new ApplicationUser();
 
@@ -132,7 +133,7 @@ namespace MusicMediaTest
         [Fact]
         public void TestGetArtistsWithNullUser()
         {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_get)");
 
             ApplicationUser user = null;
 
@@ -145,7 +146,7 @@ namespace MusicMediaTest
         [Fact]
         public void TestGetArtistsWithUserWithNoArtists()
         {
-            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test)");
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_get)");
 
             var user = new ApplicationUser();
 
@@ -154,6 +155,73 @@ namespace MusicMediaTest
             var service = new ArtistService(context);
 
             Assert.Throws<Exception>(() => service.GetArtists(user));
+        }
+        [Fact]
+        public async Task TestRemoveArtistsAsyncSimpleCase()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_remove)");
+
+            var user = new ApplicationUser();
+
+            user.Id = "firtstId";
+
+            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
+
+            var service = new ArtistService(context);
+
+            var model = new ArtistDto("1", "josh", "firstImage");
+
+            var artist = new Artist(model);
+
+            user.Artists.Add(artist);
+
+            artist.ApplicationUserId = user.Id;
+
+            artist.Id = 1;
+            context.Artists.Add(artist);
+            context.ApplicationUser.Add(user);
+            context.SaveChanges();
+
+            await service.RemoveArtistAsync(model, user);
+
+            Assert.Empty(user.Artists);
+            Assert.Empty(context.Artists);
+        }
+        [Fact]
+        public async Task TestRemoveArtistsAsyncSimpleCaseWithMoreThanOneArtist()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_REMOVE)");
+
+            var user = new ApplicationUser();
+
+            user.Id = "firtstId";
+
+            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
+
+            var service = new ArtistService(context);
+
+            var model = new ArtistDto("1", "josh", "firstImage");
+            
+
+            var artist = new Artist(model);
+            var secondArtist = new Artist("2", "jack", "secondImage");
+            user.Artists.Add(artist);
+            user.Artists.Add(secondArtist);
+
+            artist.ApplicationUserId = user.Id;
+            secondArtist.ApplicationUserId = user.Id;
+            artist.Id = 1;
+            secondArtist.Id = 2;
+            context.Artists.Add(artist);
+            context.Artists.Add(secondArtist);
+            context.ApplicationUser.Add(user);
+            context.SaveChanges();
+
+            await service.RemoveArtistAsync(model, user);
+
+            Assert.NotEmpty(user.Artists);
+            Assert.NotEmpty(context.Artists);
+            Assert.Equal(user.Artists.Count,  context.Artists.ToList().Count);
         }
     }
 }

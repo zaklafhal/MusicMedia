@@ -223,5 +223,24 @@ namespace MusicMediaTest
             Assert.NotEmpty(context.Artists);
             Assert.Equal(user.Artists.Count,  context.Artists.ToList().Count);
         }
+        [Fact]
+        public void TestRemoveArtistsAsyncSimpleCaseWithArtistIsNotInUserList()
+        {
+            var dbOptionsBuilder = new DbContextOptionsBuilder().UseInMemoryDatabase("music_media_test_REMOVE)");
+
+            var user = new Mock<ApplicationUser>();
+
+            user.Setup(u => u.ContainsArtist(It.IsAny<ArtistDto>())).Returns(false);
+
+            var context = new ApplicationDbContext(dbOptionsBuilder.Options);
+
+            var service = new ArtistService(context);
+
+            var model = new ArtistDto("1", "josh", "firstImage");
+
+           Assert.ThrowsAsync<Exception>(() => service.RemoveArtistAsync(model, user.Object));
+
+            
+        }
     }
 }

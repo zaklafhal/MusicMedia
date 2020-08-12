@@ -45,12 +45,17 @@ namespace MusicMedia.Services
             ValidateArtist(model, user);
             if (!user.ContainsArtist(model))
                 throw new Exception("The artists is not in the user list");
-            var artist = await _context.Artists.Where(a => a.ApplicationUserId == user.Id && a.SpotifyId == model.SpotifyId).FirstOrDefaultAsync();
+            var artist = await GetArtist(model, user);
             user.Artists.Remove(artist);
             _context.Artists.Remove(artist);
             await _context.SaveChangesAsync();
         }
+        public async Task<Artist> GetArtist(ArtistDto model ,ApplicationUser user)
+        {
+            var artist = await _context.Artists.Where(a => a.ApplicationUserId == user.Id && a.SpotifyId == model.SpotifyId).FirstOrDefaultAsync();
+            return artist;
 
+        }
         public void ValidateArtist(ArtistDto model, ApplicationUser user)
         {
 

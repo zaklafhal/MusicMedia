@@ -39,8 +39,8 @@ export class ArtistService {
       });
     }
   }
-  removeArtist(artist: Artist): Observable<Artist> {
-    return this.http.post<Artist>(this.endpoint, artist, {
+  removeArtist(artist: Artist): Observable<Artist[]> {
+    return this.http.post<Artist[]>(this.endpoint + '/remove', artist, {
       headers: this.headers,
     });
   }

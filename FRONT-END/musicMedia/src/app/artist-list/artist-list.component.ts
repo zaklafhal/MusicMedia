@@ -29,7 +29,7 @@ export class ArtistListComponent implements OnInit {
   removeArtist(artist: Artist) {
     this.artistService.removeArtist(artist).subscribe((res) => {
       this.storage.storeArtists(res);
-      location.reload();
+      this.getArtists();
     });
   }
 }

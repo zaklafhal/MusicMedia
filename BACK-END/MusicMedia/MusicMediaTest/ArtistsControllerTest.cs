@@ -144,5 +144,66 @@ namespace MusicMediaTest
 
             Assert.Equal(400, status);
         }
+        [Fact]
+        public async Task TestRemoveControllerSimpleCase()
+        {
+
+            var model = new ArtistDto("1", "josh", "firstImage");
+
+            var userMock = new Mock<ApplicationUser>();
+
+            userMock.Setup(u => u.GetArtistDtos()).Returns(new List<ArtistDto>());
+
+            var userStoreMock = Mock.Of<IUserStore<ApplicationUser>>();
+
+            var userManagerMock = new Mock<UserManager<ApplicationUser>>(userStoreMock, null, null, null, null, null, null, null, null);
+
+            userManagerMock.Setup(u => u.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(userMock.Object);
+
+            var artistServiceMock = new Mock<IArtistService>();
+
+            artistServiceMock.Setup(s => s.RemoveArtistAsync(model, userMock.Object)).Verifiable();
+
+            var controller = new ArtistsController(artistServiceMock.Object, userManagerMock.Object);
+
+            var result = await controller.RemoveArtists(model) as ObjectResult;
+
+            var status = result.StatusCode;
+
+            var artistsDto = result.Value as List<ArtistDto>;
+
+            Assert.Equal(200, status);
+            Assert.Empty(artistsDto);
+        }
+        [Fact]
+        public async Task TestRemoveControllerBadRequest()
+        {
+
+            var model = new ArtistDto("1", "josh", "firstImage");
+
+            var userMock = new Mock<ApplicationUser>();
+
+            userMock.Setup(u => u.GetArtistDtos()).Returns(new List<ArtistDto>());
+
+            var userStoreMock = Mock.Of<IUserStore<ApplicationUser>>();
+
+            var userManagerMock = new Mock<UserManager<ApplicationUser>>(userStoreMock, null, null, null, null, null, null, null, null);
+
+            userManagerMock.Setup(u => u.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(userMock.Object);
+
+            var artistServiceMock = new Mock<IArtistService>();
+
+            artistServiceMock.Setup(s => s.RemoveArtistAsync(model, userMock.Object)).Throws(new Exception());
+
+            var controller = new ArtistsController(artistServiceMock.Object, userManagerMock.Object);
+
+            var result = await controller.RemoveArtists(model) as ObjectResult;
+
+            var status = result.StatusCode;
+
+            var artistsDto = result.Value as List<ArtistDto>;
+
+            Assert.Equal(400, status);
+        }
     }
 }

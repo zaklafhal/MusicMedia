@@ -53,4 +53,9 @@ export class MainComponent implements OnInit {
       this.storage.storeArtists(res);
     });
   }
+  removeArtist() {
+    this.artistService.removeArtist(this.artist).subscribe((res) => {
+      this.storage.storeArtists(res);
+    });
+  }
 }

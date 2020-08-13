@@ -11,7 +11,13 @@ import { StorageService } from './storage.service';
 })
 export class ArtistService {
   constructor(private http: HttpClient, private storage: StorageService) {}
+
   private endpoint = `${environment.endpoint}artists`;
+
+  private headers = new HttpHeaders({
+    Authorization: 'Bearer  ' + this.storage.getToken(),
+    'Content-Type': 'application/json',
+  });
 
   containsArtist(artist: Artist): boolean {
     const artists = this.storage.getArtists();
@@ -22,21 +28,20 @@ export class ArtistService {
 
   getArtists(): Observable<Artist[]> {
     if (this.storage.user) {
-      const headers = new HttpHeaders({
-        Authorization: 'Bearer  ' + this.storage.getToken(),
-        'Content-Type': 'application/json',
-      });
-      return this.http.get<Artist[]>(this.endpoint, { headers: headers });
+      return this.http.get<Artist[]>(this.endpoint, { headers: this.headers });
     }
   }
 
   addArtist(artist: Artist): Observable<any> {
     if (this.storage.user) {
-      const headers = new HttpHeaders({
-        Authorization: 'Bearer  ' + this.storage.getToken(),
-        'Content-Type': 'application/json',
+      return this.http.post<any>(this.endpoint, artist, {
+        headers: this.headers,
       });
-      return this.http.post<any>(this.endpoint, artist, { headers: headers });
     }
+  }
+  removeArtist(artist: Artist): Observable<Artist> {
+    return this.http.post<Artist>(this.endpoint, artist, {
+      headers: this.headers,
+    });
   }
 }

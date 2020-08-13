@@ -67,8 +67,8 @@ namespace MusicMedia.Controllers
             }
         }
         [Authorize]
-        [HttpDelete]
-        [Route("")]
+        [HttpPost]
+        [Route("Remove")]
         public async Task<IActionResult> RemoveArtists(ArtistDto model)
         {
             try

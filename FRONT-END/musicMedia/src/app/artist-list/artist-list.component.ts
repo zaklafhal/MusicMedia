@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Artist } from '../model/artist';
 import { StorageService } from '../services/storage.service';
+import { ArtistService } from '../services/artist.service';
 
 @Component({
   selector: 'app-artist-list',
@@ -11,7 +12,10 @@ export class ArtistListComponent implements OnInit {
   artists: Artist[];
   count: number;
 
-  constructor(private storage: StorageService) {}
+  constructor(
+    private storage: StorageService,
+    private artistService: ArtistService
+  ) {}
 
   getArtists(): void {
     this.artists = this.storage.getArtists();
@@ -20,5 +24,12 @@ export class ArtistListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getArtists();
+  }
+
+  removeArtist(artist: Artist) {
+    this.artistService.removeArtist(artist).subscribe((res) => {
+      this.storage.storeArtists(res);
+      location.reload();
+    });
   }
 }

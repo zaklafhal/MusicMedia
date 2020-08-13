@@ -1,8 +1,7 @@
 <div class="row">
-    <div class="col">
-        <h2>My artists : {{count}}</h2>
-        
-    </div>
+  <div class="col">
+    <h2>My artists : {{ count }}</h2>
+  </div>
 </div>
 <div class="row">
   <div *ngFor="let artist of artists">
@@ -12,7 +11,9 @@
         <div class="card-body">
           <h5 class="card-title">{{ artist.name }}</h5>
           <a href="#" class="btn btn-primary detailsBtn">Details</a>
-          <a class="btn btn-danger actionBtn">Remove</a>
+          <a class="btn btn-danger actionBtn" (click)="removeArtist(artist)"
+            >Remove</a
+          >
         </div>
       </div>
     </div>

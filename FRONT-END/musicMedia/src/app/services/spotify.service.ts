@@ -8,6 +8,7 @@ import {
 import config from '../config.json';
 import { catchError, map } from 'rxjs/operators';
 import { Artist } from '../model/artist';
+import { Album } from '../model/album';
 
 @Injectable({
   providedIn: 'root',
@@ -55,13 +56,13 @@ export class SpotifyService {
       .pipe(map((res) => Artist.parse(res)));
   }
 
-  getAlbums(artistId: string): Observable<any> {
+  getAlbums(artistId: string): Observable<Album[]> {
     const url = `https://api.spotify.com/v1/artists/${artistId}/albums`;
     const headers = new HttpHeaders({
       Authorization: 'Bearer  ' + this.token,
     });
     return this.http
-      .get<any>(url, { headers: headers })
-      .pipe(map((res) => console.log(res)));
+      .get<Album[]>(url, { headers: headers })
+      .pipe(map((res) => Album.parseAlbums(res)));
   }
 }

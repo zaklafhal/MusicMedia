@@ -52,8 +52,16 @@ export class SpotifyService {
     });
     return this.http
       .get<Artist>(url, { headers: headers })
-      .pipe(
-        map((res) => Artist.parse(res))
-      );
+      .pipe(map((res) => Artist.parse(res)));
+  }
+
+  getAlbums(artistId: string): Observable<any> {
+    const url = `https://api.spotify.com/v1/artists/${artistId}/albums`;
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer  ' + this.token,
+    });
+    return this.http
+      .get<any>(url, { headers: headers })
+      .pipe(map((res) => console.log(res)));
   }
 }

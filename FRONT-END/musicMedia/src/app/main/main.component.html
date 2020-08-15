@@ -28,7 +28,7 @@
         <img [src]="artist.image" class="card-img-top" />
         <div class="card-body">
           <h5 class="card-title">{{ artist.name }}</h5>
-          <a href="#" class="btn btn-primary detailsBtn">Details</a>
+          <a class="btn btn-primary detailsBtn" (click)="getDetails()">Details</a>
           <span *ngIf="artistService.containsArtist(artist); else newArtist">
             <a class="btn btn-danger actionBtn" (click)="removeArtist()"
               >Remove</a

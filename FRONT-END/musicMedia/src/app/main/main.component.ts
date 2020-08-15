@@ -58,4 +58,9 @@ export class MainComponent implements OnInit {
       this.storage.storeArtists(res);
     });
   }
+  getDetails() {
+    this.spotify
+      .getAlbums(this.artist.spotifyId)
+      .subscribe((res) => console.log(res));
+  }
 }

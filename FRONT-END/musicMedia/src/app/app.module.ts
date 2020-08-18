@@ -9,9 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './main/main.component';
 import { RegisterComponent } from './register/register.component';
 import { ArtistListComponent } from './artist-list/artist-list.component';
+import { AlbumComponent } from './album/album.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, InputComponent, MainComponent, RegisterComponent, ArtistListComponent],
+  declarations: [AppComponent, LoginComponent, InputComponent, MainComponent, RegisterComponent, ArtistListComponent, AlbumComponent],
   imports: [BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],

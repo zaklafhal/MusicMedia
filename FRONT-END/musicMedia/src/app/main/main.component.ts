@@ -4,6 +4,7 @@ import { SpotifyService } from '../services/spotify.service';
 import { ArtistService } from '../services/artist.service';
 import { Artist } from './../model/artist';
 import { StorageService } from '../services/storage.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -20,7 +21,8 @@ export class MainComponent implements OnInit {
     private formBuilder: FormBuilder,
     private spotify: SpotifyService,
     private artistService: ArtistService,
-    private storage: StorageService
+    private storage: StorageService,
+    private route: ActivatedRoute
   ) {}
 
   search(form: FormGroup) {
@@ -57,10 +59,5 @@ export class MainComponent implements OnInit {
     this.artistService.removeArtist(this.artist).subscribe((res) => {
       this.storage.storeArtists(res);
     });
-  }
-  getDetails() {
-    this.spotify
-      .getAlbums(this.artist.spotifyId)
-      .subscribe((res) => console.log(res));
   }
 }
